@@ -39,16 +39,28 @@
   (electric-pair-mode t)
 #+END_SRC
 ** No backup files
+#+BEGIN_SRC emacs-lisp
 (setq make-backup-files nil)
 (setq auto-save-default nil)
+#+END_SRC
 ** Maximize at startup
+#+BEGIN_SRC emacs-lisp
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+END_SRC
 ** C style
+#+BEGIN_SRC emacs-lisp
 (setq c-default-style "linux")
-** Quality of life
+#+END_SRC
+** Quality of lifeE
+#+BEGIN_SRC emacs-lisp
 (setq scroll-conservatively 100)
 (setq ring-bell-function 'ignore)
 (global-prettify-symbols-mode t)
+#+END_SRC
+** Font
+#+BEGIN_SRC emacs-lisp
+(set-default-font "xos4 Terminus 14" nil t)
+#+END_SRC
 * ORG Bullets
 ** ORG Bullets Package
 #+BEGIN_SRC emacs-lisp
@@ -118,16 +130,40 @@
 * Company
 ** Main Company package
 #+BEGIN_SRC emacs-lisp
-(use-package company
-  :ensure t
-  :init
-  :config
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 3)
-  (add-hook 'after-init-hook 'global-company-mode))
-(with-eval-after-load 'company
-  (add-hook 'c++-mode-hook 'company-mode)
-  (add-hook 'c-mode-hook 'company-mode))
+  (use-package company
+    :ensure t
+    :init
+    :config
+    (setq company-idle-delay 0)
+    (setq company-minimum-prefix-length 3)
+    (add-hook 'after-init-hook 'global-company-mode))
+  (with-eval-after-load 'company
+   ;; (define-key company-active-map (kbd "M-n") nil )
+   ;; (define-key company-active-map (kbd "M-p") nil )
+   (define-key company-active-map (kbd "C-n") #'company-select-next)
+   (define-key company-active-map (kbd "C-p") #'company-select-previous)
+   ;;(define-key company-active-map (kbd "s-c") #'company-abort)
+)
+  (with-eval-after-load 'company
+    (add-hook 'c++-mode-hook 'company-mode)
+    (add-hook 'c-mode-hook 'company-mode)
+    (add-hook 'tex-mode-hook 'company-mode)
+    (add-hook 'LaTeX-mode-hook 'company-mode)
+    (define-key c-mode-map  [(tab)] 'company-complete)
+    (define-key c++-mode-map  [(tab)] 'company-complete)
+    ;;(define-key LaTeX-mode-map  [(tab)] 'company-complete)
+    )
+#+END_SRC
+** Company Auctex
+#+BEGIN_SRC emacs-lisp
+  (use-package company-auctex
+    :ensure t)
+  (company-auctex-init)
+#+END_SRC
+** Yas minor mode
+#+BEGIN_SRC emacs-lisp
+(add-hook 'c++-mode-hook 'yas-minor-mode)
+(add-hook 'c-mode-hook 'yas-minor-mode)
 #+END_SRC
 ** Company Irony
 #+BEGIN_SRC emacs-lisp
@@ -154,7 +190,8 @@
   :config
   (require 'spaceline-config)
     (setq spaceline-buffer-encoding-abbrev-p nil)
-    (setq spaceline-line-column-p nil)
+    (setq spaceline-line-column-p 1)
+    (setq spaceline-column 1)
     (setq spaceline-line-p nil)
     (setq powerline-default-separator (quote arrow))
     (spaceline-spacemacs-theme))
@@ -190,4 +227,34 @@
    :ensure t
    :config (global-nlinum-mode)
 )
+#+END_SRC
+* Auctex
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
+* Yasnippet
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :ensure t
+    :config
+    (use-package yasnippet-snippets)
+    :ensure t)
+  (yas-reload-all)
+#+END_SRC
+* Clock
+#+BEGIN_SRC emacs-lisp
+(setq display-time-24hr-format t)
+(setq display-time-format "%H:%M - %d %B %Y")
+(display-time-mode 1)
+#+END_SRC
+* Battery indicator
+#+BEGIN_SRC emacs-lisp
+(use-package fancy-battery
+  :ensure t
+  :config
+    (setq fancy-battery-show-percentage t)
+    (setq battery-update-interval 15)
+    (if window-system
+      (fancy-battery-mode)
+      (display-battery-mode)))
 #+END_SRC
