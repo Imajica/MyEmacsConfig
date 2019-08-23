@@ -29,7 +29,7 @@
 (require 'setup-cedet)
 (require 'setup-editing)
 (setq-default c-basic-offset 4)
-(set-default-font "xos4 Terminus" nil t)
+;;(set-frame-font "Terminus")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -44,7 +44,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (nlinum symon diminish spaceline dashboard rainbow-delimiters sudo-edit hungry-delete avy org-bullets beacon which-key markdown-preview-mode company-c-headers irony company-irony spacemacs-theme auctex company-math markdown-mode gh-md evil function-args zygospore helm-gtags helm yasnippet ws-butler volatile-highlights use-package undo-tree iedit dtrt-indent counsel-projectile company clean-aindent-mode anzu)))
+    (comment-dwim-2 helm-projectile edit-indirect page-break-lines yasnippet-snippets symon diminish spaceline dashboard rainbow-delimiters sudo-edit hungry-delete avy org-bullets beacon which-key markdown-preview-mode company-c-headers irony company-irony spacemacs-theme auctex company-math markdown-mode gh-md function-args zygospore helm-gtags helm yasnippet ws-butler volatile-highlights use-package undo-tree iedit dtrt-indent counsel-projectile company clean-aindent-mode anzu)))
  '(speedbar-show-unknown-files t))
 
 (custom-set-faces
@@ -62,11 +62,11 @@
  helm-gtags-suggested-key-mapping t
  )
 
-(org-babel-load-file (expand-file-name "~/.emacs.d/config.org"))
+(org-babel-load-file (expand-file-name "/home/vardas/.emacs.d/config.org"))
 
-(global-set-key (kbd "RET") 'newline-and-indent)  ; automatically indent when press RET
-(require 'yasnippet)
-(yas-global-mode 1)
+(global-set-key (kbd "RET") 'newline-and-indent)
+
+
 
 (use-package beacon
   :ensure t
@@ -78,22 +78,7 @@
   :init
   (which-key-mode))
 
-;; (use-package company-irony
-;;   :ensure t
-;;   :config
-;;   (require 'company)
-;;   (add-to-list 'company-backends 'company-irony))
 
-;; (use-package irony
-;;   :ensure t
-;;   :config
-;;   (add-hook 'c++-mode-hook 'irony-mode)
-;;   (add-hook 'c-mode-hook 'irony-mode)
-;;   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-
-;; (with-eval-after-load 'company
-;;   (add-hook 'c++-mode-hook 'company-mode)
-;;   (add-hook 'c-mode-hook 'company-mode))
 ;;(with-eval-after-load 'company
 ;;  (define-key company-active-map (kbd "M-n") 0)
 ;;  (define-key company-active-map (kbd "M-p") 0)
@@ -119,8 +104,6 @@
 (add-hook 'c++-mode-hook 'helm-gtags-mode)
 (add-hook 'asm-mode-hook 'helm-gtags-mode)
 
-
-
 (require 'tex)
 (TeX-global-PDF-mode t)
 (setq TeX-auto-save t)
@@ -140,8 +123,3 @@
 (setq-local imenu-create-index-function #'ggtags-build-imenu-index)
 (setq column-number-mode t)
 (global-set-key "\C-x\C-\\" 'goto-last-change)
-
-;;((company-clang-arguments "-I/home/vardas/slurm_versions/slurm-for-process-placement/slurm-18.08.1/slurm" "-I/home/vardas/slurm_versions/slurm-for-process-placement/slurm-18.08.1/src")
-;; (company-clang-arguments "-I/home/vardas/slurm_versions/slurm-for-process-placement/slurm-18.08.1/src")
-;; (company-clang-arguments "-I/home/vardas/slurm_versions/slurm-for-process-placement/slurm-18.0.08.1/")
-;; (company-clang-arguments "-I/home/vardas/slurm_versions/slurm-for-process-placement/slurm-18.0.08.1/src/*"))

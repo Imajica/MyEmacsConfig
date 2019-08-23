@@ -51,7 +51,7 @@
 #+BEGIN_SRC emacs-lisp
 (setq c-default-style "linux")
 #+END_SRC
-** Quality of lifeE
+** Quality of life
 #+BEGIN_SRC emacs-lisp
 (setq scroll-conservatively 100)
 (setq ring-bell-function 'ignore)
@@ -59,7 +59,17 @@
 #+END_SRC
 ** Font
 #+BEGIN_SRC emacs-lisp
-(set-default-font "xos4 Terminus 14" nil t)
+(set-default-font "Terminus 14")
+#+END_SRC
+* Org Mode Settings
+#+BEGIN_SRC emacs-lisp
+(setq org-ellipsis " ")
+(setq org-src-fontify-natively t)
+(setq org-src-tab-acts-natively t)
+(setq org-confirm-babel-evaluate nil)
+(setq org-export-with-smart-quotes t)
+(setq org-src-window-setup 'current-window)
+(add-hook 'org-mode-hook 'org-indent-mode)
 #+END_SRC
 * ORG Bullets
 ** ORG Bullets Package
@@ -85,7 +95,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package avy
     :ensure t
-    :bind ("s-x" . avy-goto-char))
+    :bind ("C-c f" . avy-goto-char))
 #+END_SRC
 * Config edit/reload
 ** <C-c r> reload 
@@ -122,10 +132,18 @@
     :ensure t
     :config
       (dashboard-setup-startup-hook)
-      ;; (setq dashboard-startup-banner "~/.emacs.d/img/dashLogo.png")
-      (setq dashboard-items '((recents  . 5)
-                              (projects . 5)))
-      (setq dashboard-banner-logo-title ""))
+      (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+      (setq dashboard-startup-banner "~/.emacs.d/img/EmacsIcon.png")
+      (setq dashboard-items '((recents  . 7)
+                              (projects . 7)
+                              ))
+      (setq dashboard-set-navigator t)
+      (setq dashboard-banner-logo-title "Welcome to Emacs <3")
+      (setq dashboard-center-content t)  
+      (setq dashboard-show-shortcuts t)
+      (setq dashboard-set-footer t)
+      (setq dashboard-set-init-info t)
+      )
 #+END_SRC
 * Company
 ** Main Company package
@@ -149,8 +167,8 @@
     (add-hook 'c-mode-hook 'company-mode)
     (add-hook 'tex-mode-hook 'company-mode)
     (add-hook 'LaTeX-mode-hook 'company-mode)
-    (define-key c-mode-map  [(tab)] 'company-complete)
-    (define-key c++-mode-map  [(tab)] 'company-complete)
+    (define-key c-mode-map  [(enter)] 'company-complete)
+    (define-key c++-mode-map  [(enter)] 'company-complete)
     ;;(define-key LaTeX-mode-map  [(tab)] 'company-complete)
     )
 #+END_SRC
@@ -164,6 +182,7 @@
 #+BEGIN_SRC emacs-lisp
 (add-hook 'c++-mode-hook 'yas-minor-mode)
 (add-hook 'c-mode-hook 'yas-minor-mode)
+(add-hook 'python-mode-hook 'yas-minor-mode)
 #+END_SRC
 ** Company Irony
 #+BEGIN_SRC emacs-lisp
@@ -173,6 +192,29 @@
   (require 'company)
   (add-to-list 'company-backends 'company-irony))
 #+END_SRC
+** Company Jedi
+#+BEGIN_SRC emacs-lisp
+(with-eval-after-load 'company
+    (add-hook 'python-mode-hook 'company-mode))
+
+(use-package company-jedi
+  :ensure t
+  :config
+    (require 'company)
+    (add-to-list 'company-backends 'company-jedi))
+
+(defun python-mode-company-init ()
+  (setq-local company-backends '((company-jedi
+                                  company-etags
+                                  company-dabbrev-code))))
+
+(use-package company-jedi
+  :ensure t
+  :config
+    (require 'company)
+    (add-hook 'python-mode-hook 'python-mode-company-init))
+#+END_SRC
+
 * Irony
 #+BEGIN_SRC emacs-lisp
 (use-package irony
@@ -221,12 +263,12 @@
   :bind
   ("s-t" . symon-mode))
 #+END_SRC
-* Linenum
+;;* Linenum
 #+BEGIN_SRC emacs-lisp
-(use-package nlinum
-   :ensure t
-   :config (global-nlinum-mode)
-)
+;;(use-package nlinum
+;;   :ensure t
+;;   :config (global-nlinum-mode)
+;;)
 #+END_SRC
 * Auctex
 #+BEGIN_SRC emacs-lisp
