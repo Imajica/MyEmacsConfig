@@ -59,7 +59,7 @@
 #+END_SRC
 ** Font
 #+BEGIN_SRC emacs-lisp
-(set-default-font "Terminus 14")
+(set-default-font "Source Code Pro Medium 13")
 #+END_SRC
 * Org Mode Settings
 #+BEGIN_SRC emacs-lisp
@@ -148,29 +148,30 @@
 * Company
 ** Main Company package
 #+BEGIN_SRC emacs-lisp
-  (use-package company
-    :ensure t
-    :init
-    :config
-    (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 3)
-    (add-hook 'after-init-hook 'global-company-mode))
-  (with-eval-after-load 'company
-   ;; (define-key company-active-map (kbd "M-n") nil )
-   ;; (define-key company-active-map (kbd "M-p") nil )
-   (define-key company-active-map (kbd "C-n") #'company-select-next)
-   (define-key company-active-map (kbd "C-p") #'company-select-previous)
-   ;;(define-key company-active-map (kbd "s-c") #'company-abort)
-)
-  (with-eval-after-load 'company
-    (add-hook 'c++-mode-hook 'company-mode)
-    (add-hook 'c-mode-hook 'company-mode)
-    (add-hook 'tex-mode-hook 'company-mode)
-    (add-hook 'LaTeX-mode-hook 'company-mode)
-    (define-key c-mode-map  [(enter)] 'company-complete)
-    (define-key c++-mode-map  [(enter)] 'company-complete)
-    ;;(define-key LaTeX-mode-map  [(tab)] 'company-complete)
-    )
+    (use-package company
+      :ensure t
+      :init
+      :config
+      (setq company-idle-delay 0)
+      (setq company-minimum-prefix-length 3)
+      (add-hook 'after-init-hook 'global-company-mode))
+    (with-eval-after-load 'company
+     ;; (define-key company-active-map (kbd "M-n") nil )
+     ;; (define-key company-active-map (kbd "M-p") nil )
+     (define-key company-active-map (kbd "C-n") #'company-select-next)
+     (define-key company-active-map (kbd "C-p") #'company-select-previous)
+     ;;(define-key company-active-map (kbd "s-c") #'company-abort)
+  )
+    (with-eval-after-load 'company
+      (add-hook 'c++-mode-hook 'company-mode)
+      (add-hook 'c-mode-hook 'company-mode)
+      (add-hook 'tex-mode-hook 'company-mode)
+      (add-hook 'LaTeX-mode-hook 'company-mode)
+      (define-key c-mode-map  [(tab)] #'company-complete)
+      (define-key c++-mode-map  [(tab)] #'company-complete)
+      ;;(define-key company-active-map (kbd "SPC") #'company-abort)
+      ;;(define-key LaTeX-mode-map  [(tab)] 'company-complete)
+      )
 #+END_SRC
 ** Company Auctex
 #+BEGIN_SRC emacs-lisp
@@ -214,7 +215,40 @@
     (require 'company)
     (add-hook 'python-mode-hook 'python-mode-company-init))
 #+END_SRC
+** Company Reftex
+#+BEGIN_SRC emacs-lisp
+  (use-package company-reftex
+    :ensure t
+    :config
+      (require 'company)
+  (require 'tex-site)
+  (autoload 'reftex-mode "reftex" "RefTeX Minor Mode" t)
+  (autoload 'turn-on-reftex "reftex" "RefTeX Minor Mode" nil)
+  (autoload 'reftex-citation "reftex-cite" "Make citation" nil)
+  (autoload 'reftex-index-phrase-mode "reftex-index" "Phrase Mode" t)
+  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
+  (setq LaTeX-eqnarray-label "eq"
+  LaTeX-equation-label "eq"
+  LaTeX-figure-label "fig"
+  LaTeX-table-label "tab"
+  LaTeX-myChapter-label "chap"
+  TeX-auto-save t
+  TeX-newline-function 'reindent-then-newline-and-indent
+  TeX-parse-self t
+  TeX-style-path
+  '("style/" "auto/"
+  "/usr/share/emacs21/site-lisp/auctex/style/"
+  "/var/lib/auctex/emacs21/"
+  "/usr/local/share/emacs/site-lisp/auctex/style/")
+  LaTeX-section-hook
+  '(LaTeX-section-heading
+  LaTeX-section-title
+  LaTeX-section-toc
+  LaTeX-section-section
+  LaTeX-section-label))
+  )
+#+END_SRC
 * Irony
 #+BEGIN_SRC emacs-lisp
 (use-package irony
@@ -299,4 +333,8 @@
     (if window-system
       (fancy-battery-mode)
       (display-battery-mode)))
+#+END_SRC
+* Docview
+#+BEGIN_SRC emacs-lisp
+  (setq doc-view-continuous 1)
 #+END_SRC
