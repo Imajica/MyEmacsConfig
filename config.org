@@ -59,7 +59,7 @@
 #+END_SRC
 ** Font
 #+BEGIN_SRC emacs-lisp
-(set-default-font "Source Code Pro Medium 13")
+  (set-default-font "Terminus Medium 14")
 #+END_SRC
 * Org Mode Settings
 #+BEGIN_SRC emacs-lisp
@@ -336,5 +336,18 @@
 #+END_SRC
 * Docview
 #+BEGIN_SRC emacs-lisp
-  (setq doc-view-continuous 1)
+  (use-package latex-preview-pane
+    :ensure t
+    :config
+    (setq doc-view-continuous 1)
+    )
+#+END_SRC
+* Google This
+#+BEGIN_SRC emacs-lisp
+  ;; google-this
+  (use-package google-this
+    :ensure t
+    :config
+    (google-this-mode 1)
+  )
 #+END_SRC
