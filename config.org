@@ -59,8 +59,9 @@
 (global-prettify-symbols-mode t)
 #+END_SRC
 ** Font
+
 #+BEGIN_SRC emacs-lisp
-  (set-default-font "Terminus Medium 14")
+  (set-default-font "Source Code Pro 14")
 #+END_SRC
 * Org Mode Settings
 #+BEGIN_SRC emacs-lisp
@@ -135,8 +136,8 @@
       (dashboard-setup-startup-hook)
       (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
       (setq dashboard-startup-banner "~/.emacs.d/img/dashLogo.png")
-      (setq dashboard-items '((recents  . 4)
-                              (projects . 3)
+      (setq dashboard-items '((recents  . 6)
+                              (projects . 5)
                               ))
       (setq dashboard-set-navigator t)
       (setq dashboard-banner-logo-title "Welcome to Emacs <3")
